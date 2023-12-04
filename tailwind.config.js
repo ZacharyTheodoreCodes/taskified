@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        raleway: ["Raleway", "sans-serif"],
+        "tilt-warp": ["Tilt Warp", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
