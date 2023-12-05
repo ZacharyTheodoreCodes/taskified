@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import TaskInput from "./components/TaskInput";
 import { Task } from "./model";
+import TaskList from "./components/TaskList";
 
 const App: React.FC = () => {
   const [task, setTask] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
+
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (task) {
@@ -20,6 +22,7 @@ const App: React.FC = () => {
           Taskified 📝
         </h1>
         <TaskInput task={task} setTask={setTask} handleAdd={handleAdd} />
+        <TaskList tasks={tasks} setTasks={setTasks} />
       </div>
     </>
   );
