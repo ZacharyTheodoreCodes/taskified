@@ -7,7 +7,7 @@ interface Props {
 const TaskInput = ({ task, setTask, handleAdd }: Props) => {
   return (
     <>
-      <div className="w-[60%] flex flex-col relative">
+      <div className="w-[60%] flex flex-col relative mb-20">
         <form action="" onSubmit={handleAdd}>
           <input
             type="text"
