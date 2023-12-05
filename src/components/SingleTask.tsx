@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdDelete, MdModeEdit, MdOutlineCheck } from "react-icons/md";
 import { Task } from "../model";
+import { Draggable } from "react-beautiful-dnd";
 
 const SingleTask: React.FC<{
   index: number;
@@ -37,51 +38,58 @@ const SingleTask: React.FC<{
   }, [edit]);
 
   return (
-    <>
-      <div className="bg-[#f9fafb] rounded-lg p-3 my-2 flex items-center justify-between shadow-md transition duration-150 ease-in-out transform hover:-translate-y-0.5 hover:scale-105">
-        <form
-          className="w-full"
-          action=""
-          onSubmit={(e) => handleEdit(e, task.id)}
+    <Draggable draggableId={task.id.toString()} index={index}>
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          className="bg-[#f9fafb] rounded-lg p-3 my-2 flex items-center justify-between shadow-md transition duration-150 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
         >
-          {edit ? (
-            <input
-              className="w-full pl-1 font-semibold text-[20px] text-[#6b7280] "
-              type="text"
-              value={editTask}
-              onChange={(e) => setEditTask(e.target.value)}
-              ref={inputRef}
-            />
-          ) : (
-            <p
-              className={`font-semibold text-[20px] ${
-                task.isFinished ? "line-through" : ""
-              }`}
-            >
-              {task.name}
-            </p>
-          )}
-        </form>
-
-        <div className="flex gap-2 text-[25px] cursor-pointer">
-          <span
-            onClick={() => {
-              if (!edit && !task.isFinished) {
-                setEdit(!edit);
-              }
-            }}
+          <form
+            className="w-full"
+            action=""
+            onSubmit={(e) => handleEdit(e, task.id)}
           >
-            <MdModeEdit />
-          </span>
-          <span onClick={() => handleDelete(task.id)}>
-            <MdDelete />
-          </span>
-          <span onClick={() => handleDone(task.id)}>
-            <MdOutlineCheck />
-          </span>
+            {edit ? (
+              <input
+                className="w-full pl-1 font-semibold text-[20px] text-[#6b7280] "
+                type="text"
+                value={editTask}
+                onChange={(e) => setEditTask(e.target.value)}
+                ref={inputRef}
+              />
+            ) : (
+              <p
+                className={`font-semibold text-[20px] ${
+                  task.isFinished ? "line-through" : ""
+                }`}
+              >
+                {task.name}
+              </p>
+            )}
+          </form>
+
+          <div className="flex gap-2 text-[25px] cursor-pointer">
+            <span
+              onClick={() => {
+                if (!edit && !task.isFinished) {
+                  setEdit(!edit);
+                }
+              }}
+            >
+              <MdModeEdit />
+            </span>
+            <span onClick={() => handleDelete(task.id)}>
+              <MdDelete />
+            </span>
+            <span onClick={() => handleDone(task.id)}>
+              <MdOutlineCheck />
+            </span>
+          </div>
         </div>
-      </div>
-    </>
+      )}
+    </Draggable>
   );
 };
 export default SingleTask;
